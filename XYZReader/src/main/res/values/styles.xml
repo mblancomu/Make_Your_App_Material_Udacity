@@ -17,12 +17,22 @@
 
 <resources>
 
-    <style name="Theme.Bacon" parent="@style/Theme.AppCompat.Light.NoActionBar">
-
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="AppTheme.Base">
+        <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.Bacon.Detail">
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="theme_primary">#673AB7</item>
+        <item name="theme_primary_dark">#512DA8</item>
+        <item name="theme_accent">#00BCD4</item>
+        <color name="textColorPrimary">#FFFFFF</color>
+        <color name="windowBackground">#FFFFFF</color>
+        <color name="navigationBarColor">#000000</color>
+    </style>
+
+    <style name="AppTheme.Base.Detail">
+        <!--<item name="statusBarColor">@android:color/transparent</item>-->
     </style>
 
 </resources>

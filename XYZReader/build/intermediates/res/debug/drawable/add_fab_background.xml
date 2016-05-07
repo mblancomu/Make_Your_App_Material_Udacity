@@ -21,4 +21,4 @@
         </shape>
     </item>
     <item android:drawable="@drawable/white_selectable_item_background_circle" />
-</layer-list><!-- From: file:/C:/Users/mblanco/Downloads/xyzreader/XYZReader/src/main/res/drawable/add_fab_background.xml -->
+</layer-list><!-- From: file:/Users/manuel/AndroidStudioProjects/Make_Your_App_Material_Udacity/XYZReader/src/main/res/drawable/add_fab_background.xml -->
