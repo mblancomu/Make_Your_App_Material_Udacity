@@ -17,8 +17,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="oval">
-            <solid android:color="@color/theme_accent" />
+            <solid android:color="@color/accent" />
         </shape>
     </item>
     <item android:drawable="@drawable/white_selectable_item_background_circle" />
-</layer-list><!-- From: file:/Users/manuel/AndroidStudioProjects/Make_Your_App_Material_Udacity/XYZReader/src/main/res/drawable/add_fab_background.xml -->
+</layer-list><!-- From: file:/home/manuel/Documentos/Curso_Udacity/NanoDegree_Android/Proyectos/Make_Your_App_Material_Udacity/XYZReader/src/main/res/drawable/add_fab_background.xml -->
