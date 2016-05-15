@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/manuel/AndroidStudioProjects/Make_Your_App_Material_Udacity/XYZReader/src/main/res/values-v21/styles.xml -->
+    <!-- From: file:/home/manuel/Documentos/Curso_Udacity/NanoDegree_Android/Proyectos/Make_Your_App_Material_Udacity/XYZReader/src/main/res/values-v21/dimens.xml -->
+    <eat-comment/>
+    <dimen name="fab_compat_border">16dp</dimen>
+    <dimen name="fab_compat_margin">16dp</dimen>
+    <!-- From: file:/home/manuel/Documentos/Curso_Udacity/NanoDegree_Android/Proyectos/Make_Your_App_Material_Udacity/XYZReader/src/main/res/values-v21/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="AppTheme.Base">
         <item name="android:windowContentTransitions">true</item>
@@ -9,7 +13,7 @@
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
-    <!-- From: file:/Users/manuel/AndroidStudioProjects/Make_Your_App_Material_Udacity/XYZReader/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/values-v21/values-v21.xml -->
+    <!-- From: file:/home/manuel/Documentos/Curso_Udacity/NanoDegree_Android/Proyectos/Make_Your_App_Material_Udacity/XYZReader/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/values-v21/values-v21.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance.Material"/>
     <style name="Base.TextAppearance.AppCompat.Body1" parent="android:TextAppearance.Material.Body1"/>

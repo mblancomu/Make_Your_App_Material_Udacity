@@ -30,4 +30,4 @@
                  android:bottom="@dimen/abc_button_padding_vertical_material" />
     </shape>
 </inset>
-<!-- From: file:/Users/manuel/AndroidStudioProjects/Make_Your_App_Material_Udacity/XYZReader/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable/abc_btn_default_mtrl_shape.xml -->
+<!-- From: file:/home/manuel/Documentos/Curso_Udacity/NanoDegree_Android/Proyectos/Make_Your_App_Material_Udacity/XYZReader/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable/abc_btn_default_mtrl_shape.xml -->
