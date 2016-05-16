@@ -7,6 +7,7 @@
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
+        android:elevation="3dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -16,10 +17,10 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:scrollbarStyle="outsideOverlay"
-            android:paddingTop="116dp"
-            android:paddingLeft="@dimen/list_side_margin"
-            android:paddingRight="@dimen/list_side_margin"
-            android:paddingBottom="28dp" />
+            android:paddingTop="@dimen/margin_64"
+            android:paddingLeft="@dimen/margin_8"
+            android:paddingRight="@dimen/margin_8"
+            android:paddingBottom="@dimen/margin_8" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.AppBarLayout

@@ -35,6 +35,7 @@
 
     <!-- list -->
     <integer name="articles_column_count">1</integer>
+    <dimen name="height_image_card">100dp</dimen>
 
     <!-- detail -->
     <bool name="article_detail_is_card">false</bool>
@@ -60,5 +61,17 @@
     <dimen name="detail_body_text_size">20sp</dimen>
     <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.3</item>
     <dimen name="fab_margin">24dp</dimen>
+
+    <!--Margins global-->
+    <dimen name="margin_16">16dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="margin_4">4dp</dimen>
+    <dimen name="margin_2">2dp</dimen>
+    <dimen name="margin_24">24dp</dimen>
+    <dimen name="margin_32">32dp</dimen>
+    <dimen name="margin_48">48dp</dimen>
+    <dimen name="margin_64">64dp</dimen>
+    <dimen name="margin_72">72dp</dimen>
+    <dimen name="margin_96">96dp</dimen>
 
 </resources>

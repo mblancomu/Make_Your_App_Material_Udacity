@@ -601,6 +601,7 @@
     <dimen name="fab_elevation">12dp</dimen>
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="fab_press_translation_z">6dp</dimen>
+    <dimen name="height_image_card">100dp</dimen>
     <!-- From: file:/home/manuel/Documentos/Curso_Udacity/NanoDegree_Android/Proyectos/Make_Your_App_Material_Udacity/XYZReader/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/values/values.xml -->
     <eat-comment/>
     <item format="float" name="highlight_alpha_material_colored" type="dimen">0.26</item>
@@ -627,6 +628,16 @@
     <dimen name="list_toolbar_side_margin">0dp</dimen>
     <!-- From: file:/home/manuel/Documentos/Curso_Udacity/NanoDegree_Android/Proyectos/Make_Your_App_Material_Udacity/XYZReader/src/main/res/values/dimens.xml -->
     <eat-comment/>
+    <dimen name="margin_16">16dp</dimen>
+    <dimen name="margin_2">2dp</dimen>
+    <dimen name="margin_24">24dp</dimen>
+    <dimen name="margin_32">32dp</dimen>
+    <dimen name="margin_4">4dp</dimen>
+    <dimen name="margin_48">48dp</dimen>
+    <dimen name="margin_64">64dp</dimen>
+    <dimen name="margin_72">72dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="margin_96">96dp</dimen>
     <item name="match_parent" type="dimen">-1</item>
     <dimen name="md_keylines">16dp</dimen>
     <!-- From: file:/home/manuel/Documentos/Curso_Udacity/NanoDegree_Android/Proyectos/Make_Your_App_Material_Udacity/XYZReader/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/values/values.xml -->
