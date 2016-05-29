@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -27,8 +30,7 @@ import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
 import com.squareup.picasso.Picasso;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import static com.example.xyzreader.R.drawable.progress_color;
 
 /**
  * An activity representing a list of Articles. This activity has different presentations for
@@ -37,28 +39,38 @@ import butterknife.ButterKnife;
  * activity presents a grid of items as cards.
  */
 public class ArticleListActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>,SwipeRefreshLayout.OnRefreshListener {
 
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Toolbar mToolbar;
+    private GridLayoutManager gridLayoutManager;
+    private static final String TAG = ArticleListActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
-        //ButterKnife.bind(ArticleListActivity.this);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progress);
         mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        mSwipeRefreshLayout.setColorSchemeColors(R.color.material_blue900,R.color.material_blue700,R.color.material_blue500,R.color.material_blue300,R.color.material_blue100);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        Drawable d = getResources().getDrawable(R.drawable.progress_color);
+        mProgressBar.setProgressDrawable(d);
+
+        mProgressBar.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
 
         getLoaderManager().initLoader(0, null, this);
 
         if (savedInstanceState == null) {
             refresh();
+            mSwipeRefreshLayout.setRefreshing(true);
         }
     }
 
@@ -74,14 +86,6 @@ public class ArticleListActivity extends AppCompatActivity implements
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-       /* mProgressBar.setVisibility(View.VISIBLE);
-        mSwipeRefreshLayout.setVisibility(View.GONE);*/
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
         unregisterReceiver(mRefreshingReceiver);
@@ -94,14 +98,22 @@ public class ArticleListActivity extends AppCompatActivity implements
         public void onReceive(Context context, Intent intent) {
             if (UpdaterService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())) {
                 mIsRefreshing = intent.getBooleanExtra(UpdaterService.EXTRA_REFRESHING, false);
-                updateRefreshingUI();
+                    //updateRefreshingUI();
             }
         }
     };
 
-    private void updateRefreshingUI() {
+    /*private void updateRefreshingUI() {
+        mSwipeRefreshLayout.setColorSchemeColors(R.color.material_blue900,R.color.material_blue700,R.color.material_blue500,R.color.material_blue300,R.color.material_blue100);
         mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
-    }
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+                mRecyclerView.setVisibility(View.VISIBLE);
+            }
+        });
+    }*/
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -114,18 +126,40 @@ public class ArticleListActivity extends AppCompatActivity implements
         adapter.setHasStableIds(true);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,columnCount);
+        gridLayoutManager = new GridLayoutManager(this,columnCount);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(gridLayoutManager);
 
         mRecyclerView.setAdapter(adapter);
-//        StaggeredGridLayoutManager sglm =
-//                new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
+
+        final Handler mHandler = new Handler();
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                {
+                    mProgressBar.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                        mHandler.postDelayed(this, 1000);
+
+                }
+            }
+        };
+        mHandler.post(runnable);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }, 2000);
     }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
@@ -172,15 +206,6 @@ public class ArticleListActivity extends AppCompatActivity implements
                     .placeholder(R.mipmap.ic_launcher)
                     .into(holder.thumbnailView);
 
-            if (position == mCursor.getCount()-1){
-                mProgressBar.setVisibility(View.GONE);
-                mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-            }
-
-           /* holder.thumbnailView.setImageUrl(
-                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
-                    ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());*/
-            //holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
         }
 
         @Override

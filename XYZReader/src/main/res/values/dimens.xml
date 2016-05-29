@@ -74,4 +74,7 @@
     <dimen name="margin_72">72dp</dimen>
     <dimen name="margin_96">96dp</dimen>
 
+    <!--Values for the thumbnail-->
+    <dimen name="height_thumbnail">150dp</dimen>
+
 </resources>
