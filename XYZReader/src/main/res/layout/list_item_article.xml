@@ -40,6 +40,11 @@
             android:ellipsize="end"
             android:maxLines="4" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"></View>
+
         <TextView
             android:id="@+id/article_subtitle"
             style="@style/TextAppearance.AppCompat.Body1"
@@ -48,6 +53,7 @@
             android:paddingLeft="@dimen/margin_4"
             android:paddingRight="@dimen/margin_4"
             android:paddingBottom="@dimen/margin_4"
+            android:layout_gravity="bottom"
             android:textColor="#6000"
             android:maxLines="1"
             android:singleLine="true"

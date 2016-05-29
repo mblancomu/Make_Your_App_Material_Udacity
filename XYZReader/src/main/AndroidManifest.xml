@@ -13,10 +13,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:configChanges="orientation|screenSize"
         android:theme="@style/AppTheme.Base">
 
         <activity
             android:name=".ui.ArticleListActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +28,7 @@
 
         <activity
             android:name=".ui.ArticleDetailActivity"
+            android:configChanges="orientation|screenSize"
             android:parentActivityName=".ui.ArticleListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

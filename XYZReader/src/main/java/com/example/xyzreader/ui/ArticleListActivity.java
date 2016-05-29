@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
+import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -70,7 +72,25 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         if (savedInstanceState == null) {
             refresh();
-            mSwipeRefreshLayout.setRefreshing(true);
+
+            final Handler mHandler = new Handler();
+
+            new Thread(new Runnable() {
+                public void run() {
+                    try{
+                        Thread.sleep(5000);
+                    }
+                    catch (Exception e) { }
+
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            // Set the View's visibility back on the main UI Thread
+                            mProgressBar.setVisibility(View.GONE);
+                            mRecyclerView.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            }).start();
         }
     }
 
@@ -98,22 +118,20 @@ public class ArticleListActivity extends AppCompatActivity implements
         public void onReceive(Context context, Intent intent) {
             if (UpdaterService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())) {
                 mIsRefreshing = intent.getBooleanExtra(UpdaterService.EXTRA_REFRESHING, false);
-                    //updateRefreshingUI();
+                    updateRefreshingUI();
             }
         }
     };
 
-    /*private void updateRefreshingUI() {
-        mSwipeRefreshLayout.setColorSchemeColors(R.color.material_blue900,R.color.material_blue700,R.color.material_blue500,R.color.material_blue300,R.color.material_blue100);
+    private void updateRefreshingUI() {
         mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(false);
-                mRecyclerView.setVisibility(View.VISIBLE);
             }
         });
-    }*/
+    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -131,21 +149,6 @@ public class ArticleListActivity extends AppCompatActivity implements
         mRecyclerView.setLayoutManager(gridLayoutManager);
 
         mRecyclerView.setAdapter(adapter);
-
-        final Handler mHandler = new Handler();
-
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                {
-                    mProgressBar.setVisibility(View.GONE);
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                        mHandler.postDelayed(this, 1000);
-
-                }
-            }
-        };
-        mHandler.post(runnable);
     }
 
     @Override
@@ -193,6 +196,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         public void onBindViewHolder(ViewHolder holder, int position) {
             mCursor.moveToPosition(position);
             holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+            holder.titleView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "roboto/Roboto-Medium.ttf"));
             holder.subtitleView.setText(
                     DateUtils.getRelativeTimeSpanString(
                             mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
@@ -200,6 +204,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                             DateUtils.FORMAT_ABBREV_ALL).toString()
                             + " by "
                             + mCursor.getString(ArticleLoader.Query.AUTHOR));
+            holder.subtitleView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "roboto/Roboto-MediumItalic.ttf"));
 
             Picasso.with(ArticleListActivity.this)
                     .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
@@ -224,6 +229,27 @@ public class ArticleListActivity extends AppCompatActivity implements
             thumbnailView = (ImageView) view.findViewById(R.id.thumbnail);
             titleView = (TextView) view.findViewById(R.id.article_title);
             subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+            int columnCount = getResources().getInteger(R.integer.list_column_count);
+
+            gridLayoutManager = new GridLayoutManager(this,columnCount);
+            mRecyclerView.setLayoutManager(gridLayoutManager);
+
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+
+            int columnCount = getResources().getInteger(R.integer.list_column_count);
+
+            gridLayoutManager = new GridLayoutManager(this,columnCount);
+            mRecyclerView.setLayoutManager(gridLayoutManager);
         }
     }
 }
